@@ -3,6 +3,7 @@ telnet_install(){
 echo -e "\e[1;35m==========================安装telnet=====================================\e[0m"
 
 software=(
+    "telnet"
     "telnet-server"
     "xinetd"
     )
@@ -24,6 +25,7 @@ EOF
 fi
 echo -e "\e[1;35m手动测试telnet连接是否正常\e[0m"
 }
+
 
 
 

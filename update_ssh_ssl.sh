@@ -24,6 +24,7 @@ EOF
 
 
 
+
 echo -e "\e[1;35m手动测试telnet连接是否正常\e[0m"
 }
 
@@ -264,18 +265,20 @@ fi
 
 mv /etc/ssh/sshd_config /data/opensshbak/sshd_config.bak
 cp /usr/local/openssh/etc/sshd_config /etc/ssh/sshd_config
-
+[ $? -eq 0 ] && echo "" || { echo "/etc/ssh/sshd_config文件拷贝失败";exit; }
 mv /usr/sbin/sshd /data/opensshbak/sshd.bak
 cp /usr/local/openssh/sbin/sshd /usr/sbin/sshd
-
+[ $? -eq 0 ] && echo "" || { echo "/usr/sbin/sshd文件拷贝失败";exit; }
 mv /usr/bin/ssh /data/opensshbak/ssh.bak
 cp /usr/local/openssh/bin/ssh /usr/bin/ssh
-
+[ $? -eq 0 ] && echo "" || { echo "/usr/bin/ssh文件拷贝失败";exit; }
 mv /usr/bin/ssh-keygen /data/opensshbak/ssh-keygen.bak
 cp /usr/local/openssh/bin/ssh-keygen /usr/bin/ssh-keygen
-
+[ $? -eq 0 ] && echo "" || { echo "/usr/bin/ssh-keygen文件拷贝失败";exit; }
 mv /etc/ssh/ssh_host_ecdsa_key.pub /data/opensshbak/ssh_host_ecdsa_key.pub.bak
 cp /usr/local/openssh/etc/ssh_host_ecdsa_key.pub /etc/ssh/ssh_host_ecdsa_key.pub
+
+[ $? -eq 0 ] && echo "" || { echo "/etc/ssh/ssh_host_ecdsa_key.pub文件拷贝失败";exit; }
 
 
 for  i   in  $(rpm  -qa  |grep  openssh);do  rpm  -e  $i  --nodeps ;done
@@ -288,6 +291,9 @@ mv /etc/ssh/sshd_config.rpmsave /etc/ssh/sshd_config
 
 cp /root/openssh-${OPENSSHV}/contrib/redhat/sshd.init /etc/init.d/sshd
 [ $? -eq 0 ] && echo "" || { echo "/etc/init.d/sshd文件拷贝失败";exit; }
+
+
+
 if [ -a /root/openssh-${OPENSSHV}/contrib/redhat/sshd.init ];then
     echo ""
 else
